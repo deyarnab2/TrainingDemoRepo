@@ -1,0 +1,17 @@
+{
+	"name": "OpenRowset_Tricks",
+	"properties": {
+		"content": {
+			"query": "SELECT\n   *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsesadlsgen2.dfs.core.windows.net/synapsetraining/Empdetails.csv',\n        FORMAT = 'CSV',\n        HEADER_ROW = TRUE,\n        PARSER_VERSION = '2.0'\n)\nwith\n    (\nDepartment nvarchar(30)\n    )\n    AS [result]\n    \n    \n    -- This is auto-generated code\nSELECT\n    TOP 10 *\nFROM\n    OPENROWSET(\n        BULK 'https://synapsesadlsgen2.dfs.core.windows.net/synapsetraining/NYCTripSmall.parquet',\n        FORMAT = 'PARQUET'\n    ) \n    with\n    (\nDateID BIGINT\n,MedallionID INT\n    )\n    AS [result]\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

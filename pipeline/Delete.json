@@ -1,0 +1,48 @@
+{
+	"name": "Delete",
+	"properties": {
+		"activities": [
+			{
+				"name": "Delete1",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Operation",
+						"value": "Deleting text files from Data lake Storage"
+					}
+				],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "TextFilesDeletion",
+						"type": "DatasetReference"
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "DatalakeStorageCopyData",
+							"type": "LinkedServiceReference"
+						},
+						"path": "synapsedemo"
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"wildcardFileName": "*.txt",
+						"enablePartitionDiscovery": false
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-06-09T02:39:33Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

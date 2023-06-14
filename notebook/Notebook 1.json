@@ -1,0 +1,180 @@
+{
+	"name": "Notebook 1",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "SparkPool1",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"runAsWorkspaceSystemIdentity": false,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "bb2bae90-adc7-48f0-b6ba-a7b464865fa6"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/343918f2-c47a-438c-9dc3-bfc4576324ba/resourceGroups/synapse-midmajix-training/providers/Microsoft.Synapse/workspaces/synapse-ws-mindmajix/bigDataPools/SparkPool1",
+				"name": "SparkPool1",
+				"type": "Spark",
+				"endpoint": "https://synapse-ws-mindmajix.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/SparkPool1",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net",
+					"authHeader": null
+				},
+				"sparkVersion": "3.3",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"new_rows = [('Arnab','Male',5000),('Radha','Female',10000)]\r\n",
+					"df = spark.createDataFrame(new_rows,['Name','Gender','Salary'])\r\n",
+					"df.show()\r\n",
+					"#df1 = df.repartition(1)\r\n",
+					"#df1.write.csv('abfss://synapsetraining@synapsesadlsgen2.dfs.core.windows.net/PysparkCodingFiles/',header=True,mode ='overwrite')"
+				],
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df.createOrReplaceTempView(\"demoTempTable\")"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%sql\r\n",
+					"--SHOW TABLES\r\n",
+					"Select * from demoTempTable"
+				],
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"import pandas\r\n",
+					"df2 = pandas.read_csv('abfss://synapsetraining@synapsesadlsgen2.dfs.core.windows.net/Empdetails.csv',\r\n",
+					"storage_options = {'accountkey':'vTuXI5wwfw//GEtVYR1FzwNhVPoIrBghdwWoPHqAsYDNNE8AYBdFcw7FjbNt+V+9PsWQfmgMLSJp+ASthuHiPQ=='})\r\n",
+					"display(df2)"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import pandas\r\n",
+					"df3 = pandas.DataFrame({'id':[1,2],'name':['Arnab','Rahul']})\r\n",
+					"df3.to_csv('abfss://synapsetraining@synapsesadlsgen2.dfs.core.windows.net/EmpdetailsDemo.csv',\r\n",
+					"storage_options = {'accountkey':'vTuXI5wwfw//GEtVYR1FzwNhVPoIrBghdwWoPHqAsYDNNE8AYBdFcw7FjbNt+V+9PsWQfmgMLSJp+ASthuHiPQ=='})"
+				],
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import fsspec\r\n",
+					"import pandas\r\n",
+					"\r\n",
+					"adls_account_name = 'synapseadlsgen2'\r\n",
+					"sas_key = TokenLibrary.getConnectionString('AzureDataLakeStorageTraining')\r\n",
+					"fsspec.open('abfss://synapsetraining/Empdetails.csv',account_name = adls_account_name, sas_token = sas_key)\r\n",
+					"with fsspec_object.open() as f:\r\n",
+					"   df5= pandas.read_csv(f)\r\n",
+					"\r\n",
+					"display(f)"
+				],
+				"execution_count": 21
+			}
+		]
+	}
+}

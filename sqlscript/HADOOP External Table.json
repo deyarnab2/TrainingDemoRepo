@@ -1,0 +1,17 @@
+{
+	"name": "HADOOP External Table",
+	"properties": {
+		"content": {
+			"query": "Use SynapseTrainingDB\nGO\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Hello@123!$%'\n\nCREATE DATABASE SCOPED CREDENTIAL trainingcredential\nWITH IDENTITY = 'Managed Identity'\nGO\n\nCREATE EXTERNAL DATA SOURCE trainingdatasource WITH(\nLOCATION = 'abfss://synapsetraining@synapsesadlsgen2.dfs.core.windows.net',\nCREDENTIAL = trainingcredential,\nTYPE = HADOOP\n);\n\nCREATE EXTERNAL FILE FORMAT ParquetTrainingFileFormat\nWITH(\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\n\nCREATE EXTERNAL TABLE dbo.NYCTaxi\n( \n\t[DateID] [int]  NULL,\n\t[MedallionID] [int]  NULL,\n\t[HackneyLicenseID] [int]  NULL,\n\t[PickupTimeID] [int]  NULL,\n\t[DropoffTimeID] [int]  NULL,\n\t[PickupGeographyID] [int]  NULL,\n\t[DropoffGeographyID] [int]  NULL,\n\t[PickupLatitude] [float]  NULL,\n\t[PickupLongitude] [float]  NULL,\n\t[PickupLatLong] [nvarchar](4000)  NULL,\n\t[DropoffLatitude] [float]  NULL,\n\t[DropoffLongitude] [float]  NULL,\n\t[DropoffLatLong] [nvarchar](4000)  NULL,\n\t[PassengerCount] [int]  NULL,\n\t[TripDurationSeconds] [int]  NULL,\n\t[TripDistanceMiles] [float]  NULL,\n\t[PaymentType] [nvarchar](4000)  NULL,\n\t[FareAmount] [numeric](19,4)  NULL,\n\t[SurchargeAmount] [numeric](19,4)  NULL,\n\t[TaxAmount] [numeric](19,4)  NULL,\n\t[TipAmount] [numeric](19,4)  NULL,\n\t[TollsAmount] [numeric](19,4)  NULL,\n\t[TotalAmount] [numeric](19,4)  NULL\n)\n    WITH\n    (\n        LOCATION = '/NYCTripSmall.parquet',\n        DATA_SOURCE = trainingdatasource,\n        FILE_FORMAT = ParquetTrainingFileFormat\n    )\n\n    select top 100* from dbo.NYCTaxi",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SynapseTrainingDB",
+				"poolName": "SynapseTrainingDB"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"name": "Foreachactivity",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatalakeStorageCopyData",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FolderName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().FolderName",
+					"type": "Expression"
+				},
+				"fileSystem": "synapsetraining"
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

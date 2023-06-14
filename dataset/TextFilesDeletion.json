@@ -1,0 +1,19 @@
+{
+	"name": "TextFilesDeletion",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DatalakeStorageCopyData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "TextFiles",
+				"fileSystem": "synapsetraining"
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

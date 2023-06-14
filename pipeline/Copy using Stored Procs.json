@@ -1,0 +1,30 @@
+{
+	"name": "Copy using Stored Procs",
+	"properties": {
+		"activities": [
+			{
+				"name": "SQL pool stored procedure1",
+				"type": "SqlPoolStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"sqlPool": {
+					"referenceName": "SynapseTrainingDB",
+					"type": "SqlPoolReference"
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[CopyData]"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-06-09T04:12:29Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

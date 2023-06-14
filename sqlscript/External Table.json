@@ -1,0 +1,17 @@
+{
+	"name": "External Table",
+	"properties": {
+		"content": {
+			"query": "Use TrainingDB\nGO\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Hello@123'\n\nCREATE DATABASE SCOPED CREDENTIAL democredential\nWITH IDENTITY = 'SHARED ACCESS SIGNATURE',\nSECRET = 'sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2023-06-02T11:53:24Z&st=2023-06-02T03:53:24Z&spr=https&sig=2XgbvPtREEYFFr4OrInfPjWCHIYkatCwfWGxMSBZA2E%3D'\nGO\n\nCREATE EXTERNAL DATA SOURCE demodatasource WITH(\nLOCATION = 'https://synapsesadlsgen2.blob.core.windows.net',\nCREDENTIAL = democredential\n);\n\nCREATE EXTERNAL FILE FORMAT ParquetFileFormat\nWITH(\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\nCREATE SCHEMA NYCTaxi\n\nCREATE EXTERNAL TABLE NYCTaxi.PassengerCountStats\n    WITH\n    (\n        LOCATION = 'synapsedemo/NYCTaxi/',\n        DATA_SOURCE = demodatasource,\n        FILE_FORMAT = ParquetFileFormat\n    )\nAS\nSELECT PassengerCount,\n      SUM(AvgTripDistance) as SumTripDistance,\n      AVG(AvgTripDistance) as AvgTripDistance\nFROM \nOPENROWSET\n(\n    BULK 'https://synapsesadlsgen2.dfs.core.windows.net/synapsetraining/NYCTaxi/parquetfile/part-00000-f5720c7d-066d-4f69-aabb-46cf1da30620-c000.snappy.parquet',\n        FORMAT = 'PARQUET'\n)AS [result]\n\nWHERE AvgTripDistance > 0 AND PassengerCount > 0\nGROUP BY PassengerCount\nGO\n\nselect * from NYCTaxi.PassengerCountStats\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "TrainingDB",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

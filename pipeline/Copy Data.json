@@ -1,0 +1,293 @@
+{
+	"name": "Copy Data",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowPolyBase": true,
+						"polyBaseSettings": {
+							"rejectValue": 0,
+							"rejectType": "value",
+							"useTypeDefault": true
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DateID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "DateID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "MedallionID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "MedallionID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "HackneyLicenseID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "HackneyLicenseID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "PickupTimeID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "PickupTimeID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "DropoffTimeID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "DropoffTimeID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "PickupGeographyID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "PickupGeographyID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "DropoffGeographyID",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "DropoffGeographyID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "PickupLatitude",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "PickupLatitude",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"name": "PickupLongitude",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "PickupLongitude",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"name": "PickupLatLong",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PickupLatLong",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DropoffLatitude",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "DropoffLatitude",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"name": "DropoffLongitude",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "DropoffLongitude",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"name": "DropoffLatLong",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DropoffLatLong",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PassengerCount",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "PassengerCount",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "TripDurationSeconds",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "TripDurationSeconds",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "TripDistanceMiles",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "TripDistanceMiles",
+									"type": "Single"
+								}
+							},
+							{
+								"source": {
+									"name": "PaymentType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PaymentType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FareAmount",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "FareAmount",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "SurchargeAmount",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "SurchargeAmount",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TaxAmount",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TaxAmount",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TipAmount",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TipAmount",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TollsAmount",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TollsAmount",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAmount",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TotalAmount",
+									"type": "Decimal"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "NYCTaxiTripDataset",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLPoolSynapseTrainingDatabase",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-06-09T02:39:05Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}
